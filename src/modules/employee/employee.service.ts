@@ -10,38 +10,34 @@ import {
 
 export class EmployeeService {
  async createEmployee(data: CreateEmployeeDTO, photoPath?: string): Promise<IEmployee> {
-    // Convert date strings to Date objects
-    const employeeData: any = {
-      name: data.name,
-      age: data.age,
-      designation: data.designation,
-      salary: data.salary,
-    };
 
-    // Handle date conversions
-    if (data.hiring_date) {
-      employeeData.hiring_date = new Date(data.hiring_date);
-    }
-    
-    if (data.date_of_birth) {
-      employeeData.date_of_birth = new Date(data.date_of_birth);
+  const employeeData: any = {
+    name: data.name,
+    age: data.age,
+    designation: data.designation,
+    salary: data.salary,
+    hiring_date: new Date(data.hiring_date),
+    date_of_birth: new Date(data.date_of_birth),
+    photo_path: photoPath || null,
+  };
+
+  try {
+    const [employee] = await db<IEmployee>("employees")
+      .insert(employeeData)
+      .returning("*");
+
+    return employee;
+
+  } catch (error: any) {
+    // PostgreSQL duplicate unique error code
+    if (error.code === "23505") {
+      throw new ApiError(409, "Employee already exists (duplicate name and date of birth).");
     }
 
-    if (photoPath) {
-      employeeData.photo_path = photoPath;
-    }
-
-    try {
-      const [employee] = await db<IEmployee>('employees')
-        .insert(employeeData)
-        .returning('*');
-
-      return employee;
-    } catch (error: any) {
-      console.error('Database error:', error);
-      throw new ApiError(500, `Database error: ${error.message}`);
-    }
+    throw new ApiError(500, `Database error: ${error.message}`);
   }
+}
+
 
   async getEmployees(params: EmployeeQueryParams) {
   const page = Number(params.page) || 1;
