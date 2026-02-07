@@ -8,6 +8,7 @@ export interface IEmployee {
   hiring_date: Date;
   date_of_birth: Date;
   salary: number;
+  is_active:boolean;
   photo_path?: string;
   created_at: Date;
   updated_at: Date;
@@ -20,6 +21,7 @@ export interface CreateEmployeeDTO {
   hiring_date: Date;
   date_of_birth: Date;
   salary: number;
+  is_active:boolean;
   photo?: Express.Multer.File;
 }
 
@@ -30,6 +32,7 @@ export interface UpdateEmployeeDTO {
   hiring_date?: Date;
   date_of_birth?: Date;
   salary?: number;
+  is_active:boolean;
   photo?: Express.Multer.File;
 }
 

@@ -169,10 +169,20 @@ export class EmployeeService {
     return updatedEmployee;
   }
 
-  async deleteEmployee(id: number): Promise<void> {
+   async softDeleteEmployee(id: number): Promise<IEmployee> {
     const employee = await this.getEmployeeById(id);
 
-    await db<IEmployee>('employees').where({ id }).delete();
+    const [updatedEmployee] = await db<IEmployee>('employees')
+      .where({ id })
+      .update({
+        is_active: false,
+       
+       
+        updated_at: new Date(),
+      })
+      .returning('*');
+
+    return updatedEmployee;
   }
 
   async employeeExists(id: number): Promise<boolean> {
