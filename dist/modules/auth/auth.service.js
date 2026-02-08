@@ -38,9 +38,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const bcrypt = __importStar(require("bcryptjs"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const database_1 = __importDefault(require("../../config/database"));
 const ApiError_1 = __importDefault(require("../../utils/ApiError"));
+const jwtHelper_1 = require("@/utils/jwtHelper");
 class AuthService {
     async login(data) {
         const { email, password } = data;
@@ -54,11 +54,11 @@ class AuthService {
         if (!isPasswordValid) {
             throw new ApiError_1.default(401, 'Invalid credentials');
         }
-        const token = jsonwebtoken_1.default.sign({
+        const tokenData = {
             id: user.id,
             email: user.email,
-            name: user.name,
-        }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
+        };
+        const token = jwtHelper_1.jwtHelpers.generateToken(tokenData, process.env.JWT_SECRET, process.env.JWT_EXPIRES_IN);
         return {
             token,
             user: {

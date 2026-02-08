@@ -4,8 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ApiError_1 = __importDefault(require("../utils/ApiError"));
-const errorHandler = (err, req, res, next) => {
-    let error = err;
+const errorHandler = (err, _req, res, _next) => {
     let statusCode = 500;
     let message = 'Internal Server Error';
     if (err instanceof ApiError_1.default) {

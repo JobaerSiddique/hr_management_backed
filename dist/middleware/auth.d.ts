@@ -7,5 +7,5 @@ declare global {
         }
     }
 }
-export declare const auth: (req: Request, res: Response, next: NextFunction) => void;
+export declare const auth: (req: Request, _res: Response, next: NextFunction) => void;
 //# sourceMappingURL=auth.d.ts.map

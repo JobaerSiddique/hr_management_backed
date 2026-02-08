@@ -3,11 +3,10 @@ import ApiError from '../utils/ApiError';
 
 const errorHandler = (
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void => {
-  let error = err;
   let statusCode = 500;
   let message = 'Internal Server Error';
 
@@ -36,5 +35,7 @@ const errorHandler = (
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 };
+
+
 
 export default errorHandler;

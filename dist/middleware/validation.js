@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validate = void 0;
 const ApiError_1 = __importDefault(require("../utils/ApiError"));
 const validate = (schema) => {
-    return (req, res, next) => {
+    return (req, _res, next) => {
         let dataToValidate;
         if (req.body.data && typeof req.body.data === 'string') {
             try {

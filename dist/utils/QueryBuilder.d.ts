@@ -6,6 +6,7 @@ export declare class QueryBuilder<T> {
     private queryParams;
     private searchableFields;
     constructor(queryBuilder: Knex.QueryBuilder, queryParams: QueryBuilderParams, searchableFields?: string[]);
+    where(callback: (qb: Knex.QueryBuilder) => void): this;
     search(): this;
     filter(): this;
     sort(): this;

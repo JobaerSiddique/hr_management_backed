@@ -8,7 +8,7 @@ const auth_service_1 = __importDefault(require("./auth.service"));
 const sendResponse_1 = __importDefault(require("@/utils/sendResponse"));
 class AuthController {
     constructor() {
-        this.login = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.login = (0, catchAsync_1.default)(async (req, res, _next) => {
             const data = req.body;
             const result = await auth_service_1.default.login(data);
             (0, sendResponse_1.default)(res, {
@@ -17,7 +17,7 @@ class AuthController {
                 data: result,
             });
         });
-        this.getProfile = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.getProfile = (0, catchAsync_1.default)(async (req, res, _next) => {
             const userId = req.user.id;
             const result = await auth_service_1.default.getProfile(userId);
             (0, sendResponse_1.default)(res, {

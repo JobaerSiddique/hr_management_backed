@@ -26,7 +26,7 @@ import Joi from 'joi';
 import ApiError from '../utils/ApiError';
 
 export const validate = (schema: Joi.ObjectSchema) => {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     let dataToValidate;
     
     // Check if data is coming as JSON string in 'data' field

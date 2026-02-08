@@ -6,7 +6,7 @@ import { LoginDTO } from '../../interfaces/auth';
 import sendResponse from '@/utils/sendResponse';
 
 class AuthController {
-  login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  login = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const data: LoginDTO = req.body;
     const result = await authService.login(data);
 
@@ -17,7 +17,7 @@ class AuthController {
     });
   });
 
-  getProfile = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  getProfile = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const userId = req.user!.id;
     const result = await authService.getProfile(userId);
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-export const debugMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+export const debugMiddleware = (req: Request, _res: Response, next: NextFunction): void => {
   console.log('=== DEBUG REQUEST ===');
   console.log('Headers:', req.headers);
   console.log('Content-Type:', req.headers['content-type']);

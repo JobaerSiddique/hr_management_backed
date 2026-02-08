@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
+
 import ApiError from '../utils/ApiError';
 import { JwtPayload } from '../interfaces/common';
+import { jwtHelpers } from '@/utils/jwtHelper';
 
 declare global {
   namespace Express {
@@ -11,7 +12,7 @@ declare global {
   }
 }
 
-export const auth = (req: Request, res: Response, next: NextFunction): void => {
+export const auth = (req: Request, _res: Response, next: NextFunction): void => {
   try {
     const authHeader = req.headers.authorization;
     
@@ -20,7 +21,7 @@ export const auth = (req: Request, res: Response, next: NextFunction): void => {
     }
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    const decoded = jwtHelpers.verifyToken(token, process.env.JWT_SECRET!) as JwtPayload;
     
     req.user = decoded;
     next();

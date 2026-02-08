@@ -8,7 +8,7 @@ const catchAsync_1 = __importDefault(require("@/utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("@/utils/sendResponse"));
 class AttendanceController {
     constructor() {
-        this.createAttendance = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.createAttendance = (0, catchAsync_1.default)(async (req, res, _next) => {
             const data = req.body;
             const result = await attendance_service_1.default.createOrUpdateAttendance(data);
             (0, sendResponse_1.default)(res, {
@@ -17,7 +17,7 @@ class AttendanceController {
                 data: result,
             });
         });
-        this.getAttendances = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.getAttendances = (0, catchAsync_1.default)(async (req, res, _next) => {
             const params = req.query;
             const result = await attendance_service_1.default.getAttendances(params);
             (0, sendResponse_1.default)(res, {
@@ -27,7 +27,7 @@ class AttendanceController {
                 meta: result.meta,
             });
         });
-        this.getAttendance = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.getAttendance = (0, catchAsync_1.default)(async (req, res, _next) => {
             const id = Number(req.params.id);
             const result = await attendance_service_1.default.getAttendanceById(id);
             (0, sendResponse_1.default)(res, {
@@ -36,7 +36,7 @@ class AttendanceController {
                 data: result,
             });
         });
-        this.updateAttendance = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.updateAttendance = (0, catchAsync_1.default)(async (req, res, _next) => {
             const id = Number(req.params.id);
             const data = req.body;
             const result = await attendance_service_1.default.updateAttendance(id, data);
@@ -46,7 +46,7 @@ class AttendanceController {
                 data: result,
             });
         });
-        this.deleteAttendance = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.deleteAttendance = (0, catchAsync_1.default)(async (req, res, _next) => {
             const id = Number(req.params.id);
             await attendance_service_1.default.deleteAttendance(id);
             (0, sendResponse_1.default)(res, {

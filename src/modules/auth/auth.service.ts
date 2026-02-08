@@ -1,9 +1,10 @@
 import * as bcrypt from 'bcryptjs';
-import jwt from "jsonwebtoken";
+
 import db from '../../config/database';
 import ApiError from '../../utils/ApiError';
 import { LoginDTO, AuthResponse } from '../../interfaces/auth';
 import { IUser } from '../../interfaces/auth';
+import { jwtHelpers } from '@/utils/jwtHelper';
 
 export class AuthService {
   async login(data: LoginDTO): Promise<AuthResponse> {
@@ -25,15 +26,12 @@ export class AuthService {
     }
 
     // Generate JWT token
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
-      process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
+   const tokenData = {
+      id:user.id,
+      email: user.email,
+   }
+
+   const token = jwtHelpers.generateToken(tokenData, process.env.JWT_SECRET as string,process.env.JWT_EXPIRES_IN as `${number}${'s' | 'm' | 'h' | 'd'}`)
 
     return {
       token,

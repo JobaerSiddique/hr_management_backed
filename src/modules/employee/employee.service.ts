@@ -1,6 +1,6 @@
 import db from '../../config/database';
 import ApiError from '../../utils/ApiError';
-import QueryBuilder from '../../utils/QueryBuilder';
+
 import {
   IEmployee,
   CreateEmployeeDTO,
@@ -142,6 +142,10 @@ export class EmployeeService {
     photoPath?: string
   ): Promise<IEmployee> {
     const employee = await this.getEmployeeById(id);
+
+    if(!employee){
+      throw new ApiError(404,"Employee not Found")
+    }
 
     const updateData: any = { ...data };
     

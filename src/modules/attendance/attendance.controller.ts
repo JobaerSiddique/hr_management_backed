@@ -7,7 +7,7 @@ import catchAsync from '@/utils/catchAsync';
 import sendResponse from '@/utils/sendResponse';
 
 class AttendanceController {
-  createAttendance = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  createAttendance = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const data: CreateAttendanceDTO = req.body;
     const result = await attendanceService.createOrUpdateAttendance(data);
 
@@ -18,7 +18,7 @@ class AttendanceController {
     });
   });
 
-  getAttendances = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  getAttendances = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const params: AttendanceQueryParams = req.query;
     const result = await attendanceService.getAttendances(params);
 
@@ -30,7 +30,7 @@ class AttendanceController {
     });
   });
 
-  getAttendance = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  getAttendance = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const id = Number(req.params.id);
     const result = await attendanceService.getAttendanceById(id);
 
@@ -41,7 +41,7 @@ class AttendanceController {
     });
   });
 
-  updateAttendance = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  updateAttendance = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const id = Number(req.params.id);
     const data: UpdateAttendanceDTO = req.body;
     const result = await attendanceService.updateAttendance(id, data);
@@ -53,7 +53,7 @@ class AttendanceController {
     });
   });
 
-  deleteAttendance = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  deleteAttendance = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const id = Number(req.params.id);
     await attendanceService.deleteAttendance(id);
 

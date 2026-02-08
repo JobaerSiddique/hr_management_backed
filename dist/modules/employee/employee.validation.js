@@ -12,7 +12,7 @@ exports.createEmployeeSchema = joi_1.default.object({
     hiring_date: joi_1.default.date().required(),
     date_of_birth: joi_1.default.date().required(),
     salary: joi_1.default.number().positive().required(),
-    is_active: joi_1.default.boolean().default(true)
+    deleted_at: joi_1.default.date().default(null)
 });
 exports.updateEmployeeSchema = joi_1.default.object({
     name: joi_1.default.string().min(2).max(100),
@@ -21,6 +21,6 @@ exports.updateEmployeeSchema = joi_1.default.object({
     hiring_date: joi_1.default.date(),
     date_of_birth: joi_1.default.date(),
     salary: joi_1.default.number().positive(),
-    is_active: joi_1.default.boolean().default(true)
+    deleted_at: joi_1.default.date().default(null)
 });
 //# sourceMappingURL=employee.validation.js.map

@@ -73,7 +73,7 @@ class App {
         }
     }
     routes() {
-        this.app.get('/health', (req, res) => {
+        this.app.get('/health', (_req, res) => {
             res.status(200).json({
                 status: 'OK',
                 timestamp: new Date().toISOString(),
@@ -83,7 +83,7 @@ class App {
         this.app.use('/api/employees', employee_routes_1.default);
         this.app.use('/api/attendance', attendance_routes_1.default);
         this.app.use('/api/reports', report_routes_1.default);
-        this.app.use((req, res, next) => {
+        this.app.use((req, _res, next) => {
             next(new ApiError_1.default(404, `Route ${req.originalUrl} not found`));
         });
     }

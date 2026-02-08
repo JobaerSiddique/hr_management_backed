@@ -9,7 +9,7 @@ const employee_service_1 = __importDefault(require("./employee.service"));
 const ApiError_1 = __importDefault(require("../../utils/ApiError"));
 class EmployeeController {
     constructor() {
-        this.createEmployee = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.createEmployee = (0, catchAsync_1.default)(async (req, res, _next) => {
             const data = req.body;
             console.log(data);
             const photo = req.file;
@@ -24,7 +24,7 @@ class EmployeeController {
                 data: result,
             });
         });
-        this.getEmployees = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.getEmployees = (0, catchAsync_1.default)(async (req, res, _next) => {
             const params = req.query;
             const result = await employee_service_1.default.getEmployees(params);
             (0, sendResponse_1.default)(res, {
@@ -34,7 +34,7 @@ class EmployeeController {
                 meta: result.meta,
             });
         });
-        this.getEmployee = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.getEmployee = (0, catchAsync_1.default)(async (req, res, _next) => {
             const id = Number(req.params.id);
             ;
             const result = await employee_service_1.default.getEmployeeById(id);
@@ -44,7 +44,7 @@ class EmployeeController {
                 data: result,
             });
         });
-        this.updateEmployee = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.updateEmployee = (0, catchAsync_1.default)(async (req, res, _next) => {
             const id = Number(req.params.id);
             ;
             const data = req.body;
@@ -56,7 +56,7 @@ class EmployeeController {
                 data: result,
             });
         });
-        this.deleteEmployee = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.deleteEmployee = (0, catchAsync_1.default)(async (req, res, _next) => {
             const id = Number(req.params.id);
             ;
             await employee_service_1.default.softDeleteEmployee(id);

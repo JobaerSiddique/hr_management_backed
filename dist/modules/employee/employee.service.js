@@ -103,6 +103,9 @@ class EmployeeService {
     }
     async updateEmployee(id, data, photoPath) {
         const employee = await this.getEmployeeById(id);
+        if (!employee) {
+            throw new ApiError_1.default(404, "Employee not Found");
+        }
         const updateData = { ...data };
         if (data.hiring_date) {
             updateData.hiring_date = new Date(data.hiring_date);
@@ -121,11 +124,19 @@ class EmployeeService {
         return updatedEmployee;
     }
     async softDeleteEmployee(id) {
-        const employee = await this.getEmployeeById(id);
+        const employee = await (0, database_1.default)('employees')
+            .where({ id })
+            .first();
+        if (!employee) {
+            throw new ApiError_1.default(404, "Employee not found");
+        }
+        if (employee.deleted_at) {
+            throw new ApiError_1.default(400, "Employee already deleted");
+        }
         const [updatedEmployee] = await (0, database_1.default)('employees')
             .where({ id })
             .update({
-            is_active: false,
+            deleted_at: new Date(),
             updated_at: new Date(),
         })
             .returning('*');
@@ -134,6 +145,7 @@ class EmployeeService {
     async employeeExists(id) {
         const employee = await (0, database_1.default)('employees')
             .where({ id })
+            .whereNull('deleted_at')
             .first();
         return !!employee;
     }

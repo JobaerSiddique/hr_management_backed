@@ -9,6 +9,11 @@ class QueryBuilder {
         this.queryParams = queryParams;
         this.searchableFields = searchableFields;
     }
+    where(callback) {
+        callback(this.queryBuilder);
+        callback(this.countQueryBuilder);
+        return this;
+    }
     search() {
         const searchTerm = this.queryParams.search;
         if (searchTerm && this.searchableFields.length > 0) {

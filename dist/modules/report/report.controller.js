@@ -8,7 +8,7 @@ const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const report_service_1 = __importDefault(require("./report.service"));
 class ReportController {
     constructor() {
-        this.getMonthlyAttendanceReport = (0, catchAsync_1.default)(async (req, res, next) => {
+        this.getMonthlyAttendanceReport = (0, catchAsync_1.default)(async (req, res, _next) => {
             const { month, employee_id } = req.query;
             if (!month || typeof month !== 'string') {
                 return (0, sendResponse_1.default)(res, {

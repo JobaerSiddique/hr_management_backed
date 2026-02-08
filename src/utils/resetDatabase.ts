@@ -1,12 +1,13 @@
 import knex from 'knex';
-import knexConfig from '../../knexfile';
+
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 async function resetDatabase() {
-  const environment = process.env.NODE_ENV || 'development';
-  const db = knex(knexConfig[environment]);
+const knexConfig = require('../../knexfile'); // ✅ runtime require
+const environment = process.env.NODE_ENV || 'development';
+const db = knex(knexConfig[environment]);
 
   try {
     console.log('🚨 Starting database reset...');

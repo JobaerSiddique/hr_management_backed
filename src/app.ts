@@ -52,12 +52,12 @@ class App {
 
   private routes(): void {
     // Health check
-    this.app.get('/health', (req: Request, res: Response) => {
-      res.status(200).json({
-        status: 'OK',
-        timestamp: new Date().toISOString(),
-      });
-    });
+   this.app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+  });
+});
 
     // API routes
     this.app.use('/api/auth', authRoutes);
@@ -66,7 +66,7 @@ class App {
     this.app.use('/api/reports', reportRoutes);
 
     // 404 handler
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
+    this.app.use((req: Request, _res: Response, next: NextFunction) => {
   next(new ApiError(404, `Route ${req.originalUrl} not found`));
 });
   }

@@ -5,15 +5,15 @@ import ApiError from '../utils/ApiError';
 
 const storage = multer.diskStorage({
   destination: (
-    req: Request,
-    file: Express.Multer.File,
+    _req: Request,
+    _file: Express.Multer.File,
     cb: (error: Error | null, destination: string) => void
   ) => {
     const uploadPath = process.env.UPLOAD_PATH || './uploads';
     cb(null, uploadPath);
   },
   filename: (
-    req: Request,
+    _req: Request,
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void
   ) => {
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (
-  req: Request,
+  _req: Request,
   file: Express.Multer.File,
   cb: multer.FileFilterCallback
 ) => {

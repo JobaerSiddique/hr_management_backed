@@ -44,19 +44,26 @@ class AttendanceService {
     async getAttendances(params) {
         const query = (0, database_1.default)('attendance')
             .select('attendance.*', 'employees.name as employee_name')
-            .leftJoin('employees', 'attendance.employee_id', 'employees.id');
+            .leftJoin('employees', 'attendance.employee_id', 'employees.id')
+            .whereNull('employees.deleted_at');
         const queryBuilder = new QueryBuilder_1.default(query, params);
         if (params.employee_id) {
-            queryBuilder.queryBuilder.where('attendance.employee_id', params.employee_id);
-            queryBuilder.totalQueryBuilder.where('attendance.employee_id', params.employee_id);
+            queryBuilder.where((qb) => {
+                qb.where('attendance.employee_id', params.employee_id);
+            });
         }
         if (params.from && params.to) {
-            queryBuilder.queryBuilder.whereBetween('attendance.date', [params.from, params.to]);
-            queryBuilder.totalQueryBuilder.whereBetween('attendance.date', [params.from, params.to]);
+            const from = params.from;
+            const to = params.to;
+            queryBuilder.where((qb) => {
+                qb.whereBetween('attendance.date', [from, to]);
+            });
         }
         else if (params.date) {
-            queryBuilder.queryBuilder.where('attendance.date', params.date);
-            queryBuilder.totalQueryBuilder.where('attendance.date', params.date);
+            const date = params.date;
+            queryBuilder.where((qb) => {
+                qb.where('attendance.date', date);
+            });
         }
         return await queryBuilder
             .sort()
@@ -94,7 +101,7 @@ class AttendanceService {
         return updatedAttendance;
     }
     async deleteAttendance(id) {
-        const attendance = await this.getAttendanceById(id);
+        await this.getAttendanceById(id);
         await (0, database_1.default)('attendance').where({ id }).delete();
     }
 }

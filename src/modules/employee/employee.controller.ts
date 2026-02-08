@@ -6,7 +6,7 @@ import ApiError from '../../utils/ApiError';
 import { CreateEmployeeDTO, UpdateEmployeeDTO, EmployeeQueryParams } from '../../interfaces/employee';
 
 class EmployeeController {
-  createEmployee = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  createEmployee = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const data: CreateEmployeeDTO = req.body;
     console.log(data);
     const photo = req.file;
@@ -25,7 +25,7 @@ class EmployeeController {
     });
   });
 
-  getEmployees = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  getEmployees = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const params: EmployeeQueryParams = req.query;
     const result = await employeeService.getEmployees(params);
 
@@ -37,7 +37,7 @@ class EmployeeController {
     });
   });
 
-  getEmployee = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  getEmployee = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const id =  Number(req.params.id);;
     const result = await employeeService.getEmployeeById(id);
 
@@ -48,7 +48,7 @@ class EmployeeController {
     });
   });
 
-  updateEmployee = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  updateEmployee = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const id =  Number(req.params.id);;
     const data: UpdateEmployeeDTO = req.body;
     const photo = req.file;
@@ -62,7 +62,7 @@ class EmployeeController {
     });
   });
 
-  deleteEmployee = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  deleteEmployee = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const id =  Number(req.params.id);;
     await employeeService.softDeleteEmployee(id);
 

@@ -17,6 +17,8 @@ export class AttendanceService {
       throw new ApiError(404, 'Employee not found');
     }
 
+    
+
     // Check for existing attendance on the same day
     const existingAttendance = await db<IAttendance>('attendance')
       .where({
@@ -50,32 +52,42 @@ export class AttendanceService {
     }
   }
 
-  async getAttendances(params: AttendanceQueryParams) {
-    const query = db<IAttendance>('attendance')
-      .select('attendance.*', 'employees.name as employee_name')
-      .leftJoin('employees', 'attendance.employee_id', 'employees.id');
+ async getAttendances(params: AttendanceQueryParams) {
+  const query = db<IAttendance>('attendance')
+    .select('attendance.*', 'employees.name as employee_name')
+    .leftJoin('employees', 'attendance.employee_id', 'employees.id')
+    .whereNull('employees.deleted_at'); // ✅ deleted employee attendance hide
 
-    const queryBuilder = new QueryBuilder<IAttendance>(query, params);
+  const queryBuilder = new QueryBuilder<IAttendance>(query, params);
 
-    // Apply filters
-    if (params.employee_id) {
-      queryBuilder.queryBuilder.where('attendance.employee_id', params.employee_id);
-      queryBuilder.totalQueryBuilder.where('attendance.employee_id', params.employee_id);
-    }
-
-    if (params.from && params.to) {
-      queryBuilder.queryBuilder.whereBetween('attendance.date', [params.from, params.to]);
-      queryBuilder.totalQueryBuilder.whereBetween('attendance.date', [params.from, params.to]);
-    } else if (params.date) {
-      queryBuilder.queryBuilder.where('attendance.date', params.date);
-      queryBuilder.totalQueryBuilder.where('attendance.date', params.date);
-    }
-
-    return await queryBuilder
-      .sort()
-      .paginate()
-      .execute();
+  if (params.employee_id) {
+    queryBuilder.where((qb) => {
+      qb.where('attendance.employee_id', params.employee_id);
+    });
   }
+
+ if (params.from && params.to) {
+  const from = params.from;
+  const to = params.to;
+
+  queryBuilder.where((qb) => {
+    qb.whereBetween('attendance.date', [from, to]);
+  });
+} else if (params.date) {
+  const date = params.date;
+
+  queryBuilder.where((qb) => {
+    qb.where('attendance.date', date);
+  });
+}
+
+
+  return await queryBuilder
+    .sort()
+    .paginate()
+    .execute();
+}
+
 
   async getAttendanceById(id: number): Promise<IAttendance> {
     const attendance = await db<IAttendance>('attendance')
@@ -117,10 +129,11 @@ export class AttendanceService {
     return updatedAttendance;
   }
 
-  async deleteAttendance(id: number): Promise<void> {
-    const attendance = await this.getAttendanceById(id);
-    await db<IAttendance>('attendance').where({ id }).delete();
-  }
+ async deleteAttendance(id: number): Promise<void> {
+  await this.getAttendanceById(id); // just call for validation
+  await db<IAttendance>('attendance').where({ id }).delete();
+}
+
 }
 
 export default new AttendanceService();

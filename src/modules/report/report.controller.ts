@@ -4,7 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import reportService from './report.service';
 
 class ReportController {
-  getMonthlyAttendanceReport = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  getMonthlyAttendanceReport = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
     const { month, employee_id } = req.query;
     
     if (!month || typeof month !== 'string') {
