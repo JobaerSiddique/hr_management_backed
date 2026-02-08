@@ -165,28 +165,39 @@ export class EmployeeService {
     return updatedEmployee;
   }
 
-   async softDeleteEmployee(id: number): Promise<IEmployee> {
-    const employee = await this.getEmployeeById(id);
+  async softDeleteEmployee(id: number): Promise<IEmployee> {
+  const employee = await db<IEmployee>('employees')
+    .where({ id })
+    .first();
 
-    const [updatedEmployee] = await db<IEmployee>('employees')
-      .where({ id })
-      .update({
-        is_active: false,
-       
-       
-        updated_at: new Date(),
-      })
-      .returning('*');
-
-    return updatedEmployee;
+  if (!employee) {
+    throw new ApiError(404, "Employee not found");
   }
 
-  async employeeExists(id: number): Promise<boolean> {
-    const employee = await db<IEmployee>('employees')
-      .where({ id })
-      .first();
-    return !!employee;
+  if (employee.deleted_at) {
+    throw new ApiError(400, "Employee already deleted");
   }
+
+  const [updatedEmployee] = await db<IEmployee>('employees')
+    .where({ id })
+    .update({
+      deleted_at: new Date(),
+      updated_at: new Date(),
+    })
+    .returning('*');
+
+  return updatedEmployee;
+}
+
+
+async employeeExists(id: number): Promise<boolean> {
+  const employee = await db<IEmployee>('employees')
+    .where({ id })
+    .whereNull('deleted_at') // ✅ deleted employee ignore করবে
+    .first();
+
+  return !!employee;
+}
 }
 
 export default new EmployeeService();

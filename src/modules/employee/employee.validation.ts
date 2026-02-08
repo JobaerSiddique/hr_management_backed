@@ -8,7 +8,7 @@ export const createEmployeeSchema = Joi.object<CreateEmployeeDTO>({
   hiring_date: Joi.date().required(),
   date_of_birth: Joi.date().required(),
   salary: Joi.number().positive().required(),
-  is_active:Joi.boolean().default(true)
+  deleted_at:Joi.date().default(null)
 });
 
 export const updateEmployeeSchema = Joi.object<UpdateEmployeeDTO>({
@@ -18,5 +18,5 @@ export const updateEmployeeSchema = Joi.object<UpdateEmployeeDTO>({
   hiring_date: Joi.date(),
   date_of_birth: Joi.date(),
   salary: Joi.number().positive(),
-  is_active:Joi.boolean().default(true)
+  deleted_at:Joi.date().default(null)
 });

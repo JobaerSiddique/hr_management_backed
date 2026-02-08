@@ -1,0 +1,1 @@
+{"version":3,"file":"clearMigrations.js","sourceRoot":"","sources":["../../src/utils/clearMigrations.ts"],"names":[],"mappings":";;;;;AAAA,kEAAoC;AAEpC,KAAK,UAAU,eAAe;IAC5B,MAAM,kBAAE,CAAC,GAAG,CAAC,uCAAuC,CAAC,CAAC;IACtD,MAAM,kBAAE,CAAC,GAAG,CAAC,4CAA4C,CAAC,CAAC;IAC3D,OAAO,CAAC,GAAG,CAAC,2BAA2B,CAAC,CAAC;IACzC,OAAO,CAAC,IAAI,CAAC,CAAC,CAAC,CAAC;AAClB,CAAC;AAED,eAAe,EAAE,CAAC"}
