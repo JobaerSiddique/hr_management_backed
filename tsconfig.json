@@ -1,3 +1,48 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "module": "commonjs",
+//     "lib": ["ES2020"],
+//     "outDir": "./dist",
+//     "rootDir": "./src",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "resolveJsonModule": true,
+//     "declaration": true,
+//     "declarationMap": true,
+//     "sourceMap": true,
+//     "removeComments": true,
+//     "noImplicitAny": true,
+//     "strictNullChecks": true,
+//     "strictFunctionTypes": true,
+//     "noImplicitThis": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     "noImplicitReturns": true,
+//     "moduleResolution": "node",
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["src/*"]
+//     },
+//     "experimentalDecorators": true,
+//     "emitDecoratorMetadata": true
+//   },
+//   "include": ["src/**/*"],
+//   "exclude": ["node_modules", "dist"]
+// }
+
+
+
+
+
+
+
+
+
+
+
 {
   "compilerOptions": {
     "target": "ES2020",
@@ -23,12 +68,10 @@
     "noImplicitReturns": true,
     "moduleResolution": "node",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    "paths": { "@/*": ["src/*"] },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "knexfile.ts"],
   "exclude": ["node_modules", "dist"]
 }

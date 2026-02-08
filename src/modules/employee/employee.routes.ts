@@ -7,7 +7,7 @@ import {
   createEmployeeSchema,
   updateEmployeeSchema,
 } from "./employee.validation";
-import { debugMiddleware } from "@/middleware/debug";
+
 
 const router: ExpressRouter = Router();
 
@@ -18,7 +18,7 @@ router
   .get(employeeController.getEmployees)
   .post(
     upload.single('photo'),
-     debugMiddleware, // Field name should be 'photo'
+     
     validate(createEmployeeSchema), // Validate after multer processes the file
     employeeController.createEmployee
   );

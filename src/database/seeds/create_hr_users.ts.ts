@@ -10,7 +10,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('hr_users').del();
 
   const adminPass = process.env.Admin_pass;
-  const saltRounds = Number(process.env.SALT) || 12;
+  const saltRounds = Number(process.env.SALT) ;
 
   if (!adminPass) {
     throw new Error('Admin_pass environment variable is not set');

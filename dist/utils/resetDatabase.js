@@ -37,34 +37,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const knex_1 = __importDefault(require("knex"));
+const path_1 = __importDefault(require("path"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+const knexFilePath = path_1.default.resolve(__dirname, '../../knexfile');
+const knexConfig = require(knexFilePath);
+const environment = process.env.NODE_ENV || 'development';
+const db = (0, knex_1.default)(knexConfig[environment]);
 async function resetDatabase() {
-    const knexConfig = require('../../knexfile');
-    const environment = process.env.NODE_ENV || 'development';
-    const db = (0, knex_1.default)(knexConfig[environment]);
     try {
-        console.log('🚨 Starting database reset...');
-        const tables = [
-            'knex_migrations_lock',
-            'knex_migrations',
-            'attendance',
-            'employees',
-            'hr_users'
-        ];
+        console.log('🚨 Resetting database...');
+        const tables = ['attendance', 'employees', 'hr_users', 'knex_migrations', 'knex_migrations_lock'];
         for (const table of tables) {
             try {
                 await db.schema.dropTableIfExists(table);
                 console.log(`✅ Dropped table: ${table}`);
             }
-            catch (error) {
-                console.log(`⚠️  Could not drop ${table}:`, error.message);
+            catch (err) {
+                console.log(`⚠️ Could not drop table ${table}:`, err.message);
             }
         }
         console.log('✅ Database reset complete!');
     }
-    catch (error) {
-        console.error('❌ Error during reset:', error);
+    catch (err) {
+        console.error('❌ Error resetting database:', err);
     }
     finally {
         await db.destroy();

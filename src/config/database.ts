@@ -9,12 +9,21 @@
 
 // export default db;
 
-
 import knex from 'knex';
+import path from 'path';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const knexFilePath = path.resolve(__dirname, '../../knexfile'); // absolute path to project root
+const knexConfig = require(knexFilePath);
 
 const environment = process.env.NODE_ENV || 'development';
-const config = require('../../knexfile')[environment]; // use require instead of import
 
-const db = knex(config);
+if (!knexConfig[environment]) {
+  throw new Error(`Knex configuration for environment "${environment}" not found`);
+}
+
+const db = knex(knexConfig[environment]);
 
 export default db;
